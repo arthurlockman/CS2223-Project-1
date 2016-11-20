@@ -11,9 +11,9 @@ def main():
     This is the main method for Project 1.
     """
     main_menu()
-    for i in generate_true_test_data(50, 2).split('\n'):
+    for i in generate_true_test_data(10, 2).split('\n'):
         print(i, '\t', is_anagram_better_method(i.split(',')[0], i.split(',')[1]))
-    for i in generate_true_test_data(50, 2).split('\n'):
+    for i in generate_true_test_data(10, 2).split('\n'):
         print(i, '\t', is_anagram_brute_force(i.split(',')[0], i.split(',')[1]))
 
 
@@ -22,15 +22,41 @@ def main_menu():
     print('Welcome to the anagram algorithm tester!')
     print('Please choose an option: ')
     print('1: Run both algorithms with input strings')
+    print('2: Generate sample data, and save it to a file')
+    print('3: Run both algorithms with sample data file, and output the time results')
+    print('---')
+    print('9: Exit the program')
     get_menu_choice(input(' >>  '))
-    # TODO: finish menus
 
 
 def get_menu_choice(choice):
     choice = choice.lower()
     if choice == '1':
-        print('You chose 1')
-    # TODO: finish menus
+        run_with_input_strings()
+    elif choice == '2':
+        print('You chose 2')
+    elif choice == '3':
+        print('You chose 3')
+    elif choice == '9':
+        print('Goodbye!')
+        exit()
+    else:
+        print('Oops! That menu option does not exist.')
+    print('Press the ANY key to return to the main menu')
+    input()
+    main_menu()
+
+
+def run_with_input_strings():
+    print('Input one string, and then another. This function will '
+          'determine if the second string is an anagram of the first.')
+    print('Input the first string')
+    string1 = input(' >>  ')
+    print('Input the second string')
+    string2 = input(' >>  ')
+    print(is_anagram_better_method(string1, string2))
+    print(is_anagram_brute_force(string1, string2))
+    # TODO: pretty-print output
 
 
 def is_anagram_brute_force(string1, string2):
