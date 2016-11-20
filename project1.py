@@ -1,5 +1,7 @@
 import random
 import time
+from itertools import permutations
+import os
 
 global_dict = "abcdefghijklmnopqrstuvwxyz"
 
@@ -8,10 +10,27 @@ def main():
     """
     This is the main method for Project 1.
     """
-    for i in generate_true_test_data(100, 5).split('\n'):
+    main_menu()
+    for i in generate_true_test_data(50, 2).split('\n'):
         print(i, '\t', is_anagram_better_method(i.split(',')[0], i.split(',')[1]))
-    for i in generate_false_test_data(100, 5).split('\n'):
-        print(i, '\t', is_anagram_better_method(i.split(',')[0], i.split(',')[1]))
+    for i in generate_true_test_data(50, 2).split('\n'):
+        print(i, '\t', is_anagram_brute_force(i.split(',')[0], i.split(',')[1]))
+
+
+def main_menu():
+    os.system('clear')
+    print('Welcome to the anagram algorithm tester!')
+    print('Please choose an option: ')
+    print('1: Run both algorithms with input strings')
+    get_menu_choice(input(' >>  '))
+    # TODO: finish menus
+
+
+def get_menu_choice(choice):
+    choice = choice.lower()
+    if choice == '1':
+        print('You chose 1')
+    # TODO: finish menus
 
 
 def is_anagram_brute_force(string1, string2):
@@ -25,6 +44,14 @@ def is_anagram_brute_force(string1, string2):
     of the runtime of the operation.
     """
     # TODO: DO COMPUTATION
+    is_anagram = False
+    start_time = time.time()
+    string1_permutations = [''.join(p) for p in permutations(string1)]
+    string1_permutations = set(string1_permutations)  # Removes duplicates
+    if string2 in string1_permutations:
+        is_anagram = True
+    end_time = time.time()
+    return is_anagram, (end_time - start_time)
 
 
 def is_anagram_better_method(string1, string2):
