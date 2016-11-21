@@ -10,6 +10,7 @@ def main():
     """
     This is the main method for Project 1.
     """
+    print(is_anagram_brute_force("phil", "lihp"))
     main_menu()
     for i in generate_true_test_data(10, 2).split('\n'):
         print(i, '\t', is_anagram_better_method(i.split(',')[0], i.split(',')[1]))
@@ -141,9 +142,11 @@ def is_anagram_brute_force(string1, string2):
     """
     is_anagram = False
     start_time = time.time()
-    string1_permutations = set([''.join(p) for p in permutations(string1)])
-    if string2 in string1_permutations:
-        is_anagram = True
+    perm_iterator = permutations(string1)
+    for permutation in perm_iterator:
+        if ''.join(permutation) == string2:
+            is_anagram = True
+            break
     end_time = time.time()
     return is_anagram, (end_time - start_time)
 
