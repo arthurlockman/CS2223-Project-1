@@ -118,16 +118,24 @@ def run_test_from_file():
     print('Enter the name of the test results file (CSV)')
     out_filename = input(' >>  ')
     with open(out_filename, 'w') as f:
+        print('Enter 1 to run the brute force algorithm, 2 to run the better algorithm, and 3 to run both')
+        choice = input(' >>  ')
         f.write('String Length,String 1,String 2,Brute Force Result,Brute Force Time,Better Result,Better Time\n')
         for line in lines:
             output_line = ''
             line_split = line.replace('\n', '').split(',')
-            brute_res = is_anagram_brute_force(line_split[0], line_split[1])
-            better_res = is_anagram_better_method(line_split[0], line_split[1])
+            if choice == '1' or choice == '3':
+                brute_res = is_anagram_brute_force(line_split[0], line_split[1])
+                pretty_print_output(line_split[0], line_split[1], brute_res, 1)
+            else:
+                brute_res = (False, 0)
+            if choice == '2' or choice == '3':
+                better_res = is_anagram_better_method(line_split[0], line_split[1])
+                pretty_print_output(line_split[0], line_split[1], better_res, 2)
+            else:
+                better_res = (False, 0)
             output_line += str(len(line_split[0])) + ',' + line_split[0] + ',' + line_split[1] + ',' + str(
                 brute_res[0]) + ',' + str(brute_res[1]) + ',' + str(better_res[0]) + ',' + str(better_res[1]) + '\n'
-            pretty_print_output(line_split[0], line_split[1], brute_res, 1)
-            pretty_print_output(line_split[0], line_split[1], better_res, 2)
             f.write(output_line)
 
 
