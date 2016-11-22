@@ -2,7 +2,7 @@
 Name: Arthur Lockman
 Assignment: Project 1
 The purpose of this project was to test the efficiency of two different algorithms
-which determine if two input strings are anagrams of each other.
+which determine if two input strings are anagrams of each other. 
 """
 
 import random
