@@ -120,7 +120,8 @@ def run_test_from_file():
     with open(out_filename, 'w') as f:
         print('Enter 1 to run the brute force algorithm, 2 to run the better algorithm, and 3 to run both')
         choice = input(' >>  ')
-        f.write('String Length,String 1,String 2,Brute Force Result,Brute Force Time,Better Result,Better Time\n')
+        f.write('String Length,String 1,String 2,Brute Force Result,Brute Force Time,Better Result,'\
+                'Better Time,Brute Force Computations,Better Computations\n')
         for line in lines:
             output_line = ''
             line_split = line.replace('\n', '').split(',')
@@ -128,14 +129,15 @@ def run_test_from_file():
                 brute_res = is_anagram_brute_force(line_split[0], line_split[1])
                 pretty_print_output(line_split[0], line_split[1], brute_res, 1)
             else:
-                brute_res = (False, 0)
+                brute_res = (False, 0, 0)
             if choice == '2' or choice == '3':
                 better_res = is_anagram_better_method(line_split[0], line_split[1])
                 pretty_print_output(line_split[0], line_split[1], better_res, 2)
             else:
-                better_res = (False, 0)
+                better_res = (False, 0, 0)
             output_line += str(len(line_split[0])) + ',' + line_split[0] + ',' + line_split[1] + ',' + str(
-                brute_res[0]) + ',' + str(brute_res[1]) + ',' + str(better_res[0]) + ',' + str(better_res[1]) + '\n'
+                brute_res[0]) + ',' + str(brute_res[1]) + ',' + str(better_res[0]) + ',' + str(better_res[1]) + \
+                ',' + str(brute_res[2]) + ',' + str(better_res[2]) + '\n'
             f.write(output_line)
 
 
@@ -158,7 +160,8 @@ def pretty_print_output(string1, string2, alg_output, alg_type):
         out_string += 'is '
     else:
         out_string += 'is not '
-    out_string += 'an anagram of ' + string1 + ' in ' + str(alg_output[1]) + ' seconds.'
+    out_string += 'an anagram of ' + string1 + ' in ' + str(alg_output[1]) + ' seconds '
+    out_string += ' (' + str(alg_output[2]) + ' computation loops).'
     print(out_string)
 
 
@@ -175,17 +178,20 @@ def is_anagram_brute_force(string1, string2):
     :param string2: The second string to test.
     :return: A tuple, the first value is a boolean of whether or not the
     second string is an anagram of the first. The second value is a float
-    of the runtime of the operation.
+    of the runtime of the operation. The third value is the number of loops
+    that were completed to compute the result.
     """
     is_anagram = False
+    num_loops = 0
     start_time = time.time()
     perm_iterator = permutations(string1)
     for permutation in perm_iterator:
+        num_loops += 1
         if ''.join(permutation) == string2:
             is_anagram = True
             break
     end_time = time.time()
-    return is_anagram, (end_time - start_time)
+    return is_anagram, (end_time - start_time), num_loops
 
 
 def is_anagram_better_method(string1, string2):
@@ -203,7 +209,8 @@ def is_anagram_better_method(string1, string2):
     :param string2: The second string to test.
     :return: A tuple, the first value is a boolean of whether or not the
     second string is an anagram of the first. The second value is a float
-    of the runtime of the operation.
+    of the runtime of the operation. The third value is the number of 
+    loops that were completed to compute the result.
     """
     start_time = time.time()
     string1_letter_count = {'a': 0, 'b': 0, 'c': 0, 'd': 0, 'e': 0,
@@ -219,16 +226,20 @@ def is_anagram_better_method(string1, string2):
                             'u': 0, 'v': 0, 'w': 0, 'x': 0, 'y': 0,
                             'z': 0}
     is_anagram = True
+    num_loops = 0
     for i in string1:
         string1_letter_count[i] += 1
+        num_loops += 1
     for i in string2:
         string2_letter_count[i] += 1
+        num_loops += 1
     for i in global_dict:
+        num_loops += 1
         if string1_letter_count[i] != string2_letter_count[i]:
             is_anagram = False
             break
     end_time = time.time()
-    return is_anagram, (end_time - start_time)
+    return is_anagram, (end_time - start_time), num_loops
 
 
 def generate_true_test_data(length, number):
