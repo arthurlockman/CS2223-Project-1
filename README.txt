@@ -1,0 +1,1 @@
+Please see README.md for details on how to run the project. This file can be opened in any text editor, and is in markdown format.

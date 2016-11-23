@@ -1,0 +1,21 @@
+is_anagram_better_algorithm(string1, string2):
+    string1_letter_count <- dictionary with integer entry for each letter
+    string2_letter_count <- dictionary with integer entry for each letter
+    is_anagram <- True
+    for each letter in string1:
+        string1_letter_count[current letter] += 1
+    for each letter in string2:
+        string2_letter_count[current letter] += 1
+    for each letter in the alphabet (a through z):
+        if string2_letter_count[current letter] is not
+           string1_letter_count[current letter]:
+            is_anagram <- False
+    return is_anagram
+
+is_anagram_brute_force_algorithm(string1, string2):
+    is_anagram <- False
+    permutations <- list of all possible permutations of string1
+    for each permutation in permutations:
+        if the permutation is string2:
+            is_anagram <- True
+    return is_anagram
